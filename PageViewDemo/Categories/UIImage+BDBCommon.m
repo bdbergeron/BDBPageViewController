@@ -27,10 +27,10 @@
         _scaledImageCache = [NSCache new];
     });
 
-    scaledSize.width  = scaledSize.width * [[UIScreen mainScreen] scale];
-    scaledSize.height = scaledSize.height * [[UIScreen mainScreen] scale];
+    CGFloat width  = scaledSize.width * [[UIScreen mainScreen] scale];
+    CGFloat height = scaledSize.height * [[UIScreen mainScreen] scale];
 
-    NSString *identifier = [NSString stringWithFormat:@"%@_%0.2f_%0.2f_@%0.0fx", [imageURL.path MD5Hash], scaledSize.width, scaledSize.height, [[UIScreen mainScreen] scale]];
+    NSString *identifier = [NSString stringWithFormat:@"%@_%0.fx%0.f@%0.0fx", [imageURL.path MD5Hash], scaledSize.width, scaledSize.height, [[UIScreen mainScreen] scale]];
 
     UIImage *scaledImage = [_scaledImageCache objectForKey:identifier];
     if (!scaledImage)
@@ -38,8 +38,9 @@
         CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)(imageURL), NULL);
         NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                                  [NSNumber numberWithBool:YES], kCGImageSourceCreateThumbnailWithTransform,
-                                 [NSNumber numberWithBool:YES], kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                 [NSNumber numberWithFloat:MAX(scaledSize.width, scaledSize.height)], kCGImageSourceThumbnailMaxPixelSize,
+                                 [NSNumber numberWithBool:YES], kCGImageSourceCreateThumbnailFromImageAlways,
+                                 [NSNumber numberWithBool:YES], kCGImageSourceShouldAllowFloat,
+                                 [NSNumber numberWithFloat:MAX(roundf(width), roundf(height))], kCGImageSourceThumbnailMaxPixelSize,
                                  nil];
         scaledImage = [UIImage imageWithCGImage:CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)(options))];
 

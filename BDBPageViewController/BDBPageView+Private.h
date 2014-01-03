@@ -1,5 +1,5 @@
 //
-//  BDBPagedViewController.h
+//  BDBPageView+Private.h
 //
 //  Copyright (c) 2013 Bradley David Bergeron
 //
@@ -20,50 +20,12 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-
-#import "BDBPagedView.h"
-#import "BDBPagedImageView.h"
+#import "BDBPageView.h"
 
 
 #pragma mark -
-@protocol BDBPagedViewDelegate
-<NSObject>
+@interface BDBPageView (Private)
 
-@optional
-- (void)willDisplayPagedView:(BDBPagedView *)pagedView;
-- (void)didDisplayPagedView:(BDBPagedView *)pagedView;
-
-@end
-
-
-#pragma mark -
-@protocol BDBPagedViewDataSource
-<NSObject>
-
-@required
-- (NSUInteger)numberOfPagedViews;
-- (BDBPagedView *)pagedViewForIndex:(NSUInteger)index;
-
-@end
-
-
-#pragma mark -
-@interface BDBPagedViewController : UIViewController
-<UIScrollViewDelegate, BDBPagedViewDataSource, BDBPagedViewDelegate, BDBPagedImageViewDelegate>
-
-@property (nonatomic, weak) id <BDBPagedViewDelegate> delegate;
-@property (nonatomic, weak) id <BDBPagedViewDataSource> dataSource;
-
-@property (nonatomic, readonly) NSUInteger currentIndex;
-
-- (BDBPagedView *)dequeueReusablePagedViewWithIdentifier:(NSString *)identifier;
-
-- (void)reloadPages;
-
-- (void)setCurrentIndex:(NSUInteger)currentIndex;
-
-- (void)showNextPageAnimated:(BOOL)animated;
-- (void)showPreviousPageAnimated:(BOOL)animated;
+- (void)layoutVisiblePages;
 
 @end

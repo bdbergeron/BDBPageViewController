@@ -78,8 +78,7 @@
 #pragma mark UICollectionView Delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Photo *photo = self.photos[indexPath.row];
-    PhotoViewController *photoVC = [[PhotoViewController alloc] initWithPhoto:photo];
+    PhotoViewController *photoVC = [[PhotoViewController alloc] initWithPhotos:self.photos selectedIndex:indexPath.row];
     [self.navigationController pushViewController:photoVC animated:YES];
 }
 

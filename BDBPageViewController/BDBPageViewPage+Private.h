@@ -1,5 +1,5 @@
 //
-//  BDBPagedView.h
+//  BDBPageViewPage+Private.h
 //
 //  Copyright (c) 2013 Bradley David Bergeron
 //
@@ -20,15 +20,17 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "BDBPageViewPage.h"
 
 
 #pragma mark -
-@interface BDBPagedView : UIView
+@interface BDBPageViewPage (Private)
 
-@property (nonatomic, copy, readonly) NSString *reuseIdentifier;
+@property (nonatomic) NSUInteger index;
+@property (nonatomic) NSString *reuseIdentifier;
 
-- (id)initWithReuseIdentifier:(NSString *)identifier;
+@property (nonatomic, readwrite) UIView *contentView;
+
 - (void)prepareForReuse;
 
 @end
